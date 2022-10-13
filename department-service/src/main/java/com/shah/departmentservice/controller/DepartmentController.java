@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/departments")
 @Slf4j
@@ -22,6 +24,12 @@ public class DepartmentController {
     public Department saveDepartment(@RequestBody Department department) {
         log.info("Inside saveDepartment method of DepartmentController");
         return departmentService.saveDepartment(department);
+    }
+
+    @GetMapping("/")
+    public List<Department> getAllDepartments() {
+        log.info("Inside saveDepartment method of DepartmentController");
+        return departmentService.getAllDepartments();
     }
 
     @GetMapping("/{id}")

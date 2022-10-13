@@ -7,7 +7,10 @@ import com.shah.userservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -27,7 +30,12 @@ public class UserService {
     public ResponseTemplateVO getUserWithDepartment(Long userId) {
         log.info("Inside getUserWithDepartment of UserService");
         ResponseTemplateVO vo = new ResponseTemplateVO();
-        Users users = userRepository.findByUserId(userId);
+        Users user = userRepository.findByUserId(userId);
+
+        vo.setUsers(user);
+        if (ObjectUtils.isEmpty(user))
+            return vo;
+        log.info("User found: {}", user);
 
         /*
         With service registry, you can use service name instead
@@ -35,12 +43,15 @@ public class UserService {
         */
         String deptServiceHostname = "http://DEPARTMENT-SERVICE";
         Department department =
-                restTemplate.getForObject(deptServiceHostname + "/departments/" + users.getDepartmentId()
+                restTemplate.getForObject(deptServiceHostname + "/departments/" + user.getDepartmentId()
                         , Department.class);
-
-        vo.setUsers(users);
+        log.info("department found: {}", department);
         vo.setDepartment(department);
-
         return vo;
+    }
+
+    public List<Users> getAllUsers() {
+        log.info("Inside getAllUsers of UserService");
+        return userRepository.findAll();
     }
 }

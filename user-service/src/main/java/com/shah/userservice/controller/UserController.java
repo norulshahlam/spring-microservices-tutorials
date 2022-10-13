@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @Slf4j
@@ -23,6 +25,12 @@ public class UserController {
     public Users saveUser(@RequestBody Users users) {
         log.info("Inside saveUser of UserController");
         return userService.saveUser(users);
+    }
+
+    @GetMapping("/")
+    public List<Users> getAllUsers() {
+        log.info("Inside saveUser of UserController");
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
