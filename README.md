@@ -107,6 +107,10 @@ value. Now try to run another instance again using Spring and you can see multip
 
 ![Image](./service-registry/src/main/resources/eureka-dashboard.PNG)
 
+`Warning`
+
+Make sure to have dedicated port for your DB with each service calling a unique DB port else each instance will call their own DB based on the assigned dynamic port.
+
 ## Load Balancing
 
 Load balancing is the process of distributing traffic among different instances of the same application. API gateway has
@@ -137,4 +141,23 @@ Once done, paste this url in hystrix dashboard:
 
 Re-run all the requests from user-service and dept-service and view the dashboard. you will get something like this:
 ![Image](./service-registry/src/main/resources/hystrix-dashboard3.PNG )
+
+## [Externalized configuration](https://springframework.guru/spring-external-configuration-data/)
+
+Spring Boot likes you to externalize your configuration so you can work with the same application code in different environments. You can use properties files, YAML files, environment variables and command-line arguments to externalize configuration. Property values can be injected directly into your beans using the @Value annotation, accessed via Spring’s Environment abstraction or bound to structured objects. 
+
+Externalised properties is usually being fetched through bootstrap property file as this will run before Spring context loads application property file. 
+There are few ways for externalization:
+
+Firstly have a bootstrap file in services that is externalized. in that file,  point to the uri of the config-server:
+
+      spring.cloud.config.enabled=true
+      spring.cloud.config.uri=http://localhost:9296
+
+`Configuration for all services`
+1. By using application.yml in git repo
+
+`Configuration for individual service`
+1. By using {service-name}.yml in git repo
+2. Having `spring.cloud.config.name={service-name}` in application.properties of {service-name}
 

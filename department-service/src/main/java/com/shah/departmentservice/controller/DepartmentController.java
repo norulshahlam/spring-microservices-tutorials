@@ -1,21 +1,20 @@
 package com.shah.departmentservice.controller;
 
 import com.shah.departmentservice.entity.Department;
+import com.shah.departmentservice.model.StatusCheckResponse;
 import com.shah.departmentservice.service.DepartmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
 @Slf4j
 public class DepartmentController {
-
-    @Autowired
-    private Environment env;
 
     @Autowired
     private DepartmentService departmentService;
@@ -38,11 +37,8 @@ public class DepartmentController {
         return departmentService.findDepartmentById(departmentId);
     }
 
-    @GetMapping("/status/check")
-    public String status() {
-        log.info("instance id: {}", env.getProperty("eureka.instance.instance-id"));
-        return "Working from " + env.getProperty("spring.application.name") + " on port: " + env.getProperty("local.server.port") + " and instance id: "
-                + env.getProperty("eureka.instance.instance-id");
+    @GetMapping("/status-check")
+    public StatusCheckResponse statusCheck() {
+        return departmentService.statusCheck();
     }
-
 }

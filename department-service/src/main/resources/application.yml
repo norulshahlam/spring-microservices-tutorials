@@ -21,3 +21,8 @@ spring:
     url: jdbc:mysql://localhost:3306/mydb?useLegacyDatetimeCode=false&serverTimezone=UTC
     username: admin
     password: root
+  cloud:
+    config:
+      name: department-service
+app:
+  description: this is being loaded in source code in application.yml
