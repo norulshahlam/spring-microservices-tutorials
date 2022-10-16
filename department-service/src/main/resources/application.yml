@@ -25,4 +25,4 @@ spring:
     config:
       name: department-service
 app:
-  description: this is being loaded in source code in application.yml
+  description: this is being loaded in dept-service source code in application.yml

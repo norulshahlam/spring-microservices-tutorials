@@ -145,7 +145,7 @@ additional config). run this url to ensure there is a stream coming.
 Once done, paste this url in hystrix dashboard:
 ![Image](./service-registry/src/main/resources/hystrix-dashboard2.PNG )
 
-Re-run all the requests from user-service and dept-service and view the dashboard. you will get something like this:
+Re-run all the requests from user-service and dept-service and view the dashboard. you will get something like this:  
 ![Image](./service-registry/src/main/resources/hystrix-dashboard3.PNG )
 
 ## [Externalized configuration](https://springframework.guru/spring-external-configuration-data/)
@@ -175,12 +175,32 @@ Make sure to run config-service first before running your other services as othe
 
 It is possible to have multiple property sources in a Spring Boot application. Therefore, it is important to be aware of the property source that will take precedence over others. You can view the precedence [here](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config). 
 
-## [Profiles for multiple environments](https://www.baeldung.com/spring-profiles)
+#### [Profiles for multiple environments](https://www.baeldung.com/spring-profiles)
 
 Spring Profiles provide a way to segregate parts of your application configuration and make it only available in certain environments. It automatically loads the properties in a application file for all profiles and the ones in profile-specific property files only for the specified profile. The properties in the profile-specific configuration override the ones in the master configuration.
 Here is a sample diagram:
 
 ![Image](./service-registry/src/main/resources/externalized-configuration-diagram-2.drawio.png)
+
+Endpoint to test:
+
+      http://localhost:9191/users/status-check
+      http://localhost:9191/departments/status-check
+
+`Sample`
+We have unique app-description values in:
+
+   application.yml in git repo
+   department.yml in git repo
+   application.yml in source code in department-service
+   application.yml in source code in user-service 
+
+according to level of priority, the status check:
+for dept-service will show from department.yml in git repo
+for user-service will show from application.yml in git repo
+
+![Image](./service-registry/src/main/resources/status-check-dept-service.PNG)
+![Image](./service-registry/src/main/resources/status-check-user-service.PNG)
 
 
 
