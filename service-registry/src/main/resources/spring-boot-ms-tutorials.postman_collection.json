@@ -178,7 +178,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9191/departments/status/check",
+					"raw": "http://localhost:9191/departments/status-check",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -186,8 +186,7 @@
 					"port": "9191",
 					"path": [
 						"departments",
-						"status",
-						"check"
+						"status-check"
 					]
 				}
 			},
@@ -211,7 +210,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9191/users/status/check",
+					"raw": "http://localhost:9191/users/status-check",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -219,8 +218,7 @@
 					"port": "9191",
 					"path": [
 						"users",
-						"status",
-						"check"
+						"status-check"
 					]
 				}
 			},
