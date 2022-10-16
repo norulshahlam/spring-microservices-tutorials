@@ -195,7 +195,7 @@ We have unique app-description values in:
 3. application.yml in source code in department-service  
 4. application.yml in source code in user-service  
 
-according to level of priority, the status check:
+According to level of priority, the status check:
 - for dept-service will show from department.yml in git repo  
 - for user-service will show from application.yml in git repo  
 
