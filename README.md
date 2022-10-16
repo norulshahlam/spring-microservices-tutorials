@@ -10,9 +10,15 @@
 - MySql docker container
 - Postman
 
-## Run DB server first!
+## How to run?
 
-      docker run --detach --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=mydb --env MYSQL_PASSWORD=root --env MYSQL_USER=admin --name localhost --publish 3306:3306 mysql:8.0
+- Start your docker DB
+
+```docker run --detach --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=mydb --env MYSQL_PASSWORD=root --env MYSQL_USER=admin --name localhost --publish 3306:3306 mysql:8.0```
+
+- Start service-discovery
+- Start config-service
+- start other services: dept, user, hystrix, apigateway
 
 <details>
 <summary>Debugging your DB server</summary><br>
@@ -38,7 +44,7 @@ desc users;
 select * from users;
 ```
 
-Stop & remove all running proceses
+Stop & remove all running processes
 
 ```
 docker rm $(docker ps -a -q) -f
@@ -101,7 +107,7 @@ We can now start multiple instances but the prob is service registry will regist
 fixed in property file. we can ask Spring to assign static port number by assigning server.port=0
 
 If you run multiple instances using Spring, service registry will still show one instance id running as the port number
-we assigned was fixed i.e 0. this wont be the case if we start instances using mvn command as we manually assign a port
+we assigned was fixed i.e 0. this won't be the case if we start instances using mvn command as we manually assign a port
 and instance value. to solve this, we create a property name eureka.instance.instance-id with our own randomly generated
 value. Now try to run another instance again using Spring and you can see multiple instance registering in Eureka.
 
@@ -114,7 +120,7 @@ Make sure to have dedicated port for your DB with each service calling a unique 
 ## Load Balancing
 
 Load balancing is the process of distributing traffic among different instances of the same application. API gateway has
-a built in load balancer so we can use it right away.
+a built-in load balancer, so we can use it right away.
 
 To test for this, simply run multiple instances of user / dept service and check the status through the endpoint
 status/check. this endpoint shows the port number and everytime we run this, it will show diff port number indicating
@@ -144,7 +150,7 @@ Re-run all the requests from user-service and dept-service and view the dashboar
 
 ## [Externalized configuration](https://springframework.guru/spring-external-configuration-data/)
 
-Spring Boot likes you to externalize your configuration so you can work with the same application code in different environments. You can use properties files, YAML files, environment variables and command-line arguments to externalize configuration. Property values can be injected directly into your beans using the @Value annotation, accessed via Spring’s Environment abstraction or bound to structured objects. 
+Spring Boot likes you to externalize your configuration, so you can work with the same application code in different environments. You can use properties files, YAML files, environment variables and command-line arguments to externalize configuration. Property values can be injected directly into your beans using the @Value annotation, accessed via Spring’s Environment abstraction or bound to structured objects. 
 
 Externalised properties is usually being fetched through bootstrap property file as this will run before Spring context loads application property file. 
 There are few ways for externalization:
@@ -159,5 +165,12 @@ Firstly have a bootstrap file in services that is externalized. in that file,  p
 
 `Configuration for individual service`
 1. By using {service-name}.yml in git repo
-2. Having `spring.cloud.config.name={service-name}` in application.properties of {service-name}
+2. Having `spring.cloud.config.name={service-name}` in application.properties of {service-name} in source code
+
+Make sure to run config-service first before running your other services as other services will fetch the externalized properties from your config-service on start. 
+
+`17 levels of loading configuration properties` [Reference #1](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config) [Reference #2](https://piotrminkowski.com/2019/03/11/a-magic-around-spring-boot-externalized-configuration/)
+
+It is possible to have multiple property sources in a Spring Boot application. Therefore it is important to be aware of the property source that will take precedence over others.
+
 

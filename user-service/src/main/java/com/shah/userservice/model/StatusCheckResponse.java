@@ -1,4 +1,4 @@
-package com.shah.departmentservice.model;
+package com.shah.userservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

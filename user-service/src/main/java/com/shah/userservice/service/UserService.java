@@ -3,13 +3,16 @@ package com.shah.userservice.service;
 import com.shah.userservice.VO.Department;
 import com.shah.userservice.VO.ResponseTemplateVO;
 import com.shah.userservice.entity.Users;
+import com.shah.userservice.model.StatusCheckResponse;
 import com.shah.userservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -18,6 +21,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private Environment env;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -53,5 +59,24 @@ public class UserService {
     public List<Users> getAllUsers() {
         log.info("Inside getAllUsers of UserService");
         return userRepository.findAll();
+    }
+
+    public StatusCheckResponse statusCheck() {
+
+        String instanceId = env.getProperty("eureka.instance.instance-id");
+        String applicationName = env.getProperty("spring.application.name");
+        String portNumber = env.getProperty("local.server.port");
+        String appDescription = env.getProperty("app.description");
+
+        log.info("Working from " + applicationName + " on port: " + portNumber + " and instance id: " + instanceId);
+
+        return StatusCheckResponse
+                .builder()
+                .applicationName(applicationName)
+                .instanceId(instanceId)
+                .portNumber(portNumber)
+                .timeStamp(ZonedDateTime.now())
+                .appDescription(appDescription)
+                .build();
     }
 }

@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e60083b-8ea9-4626-aa26-73557473a8e0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/department-service/src/main/java/com/shah/departmentservice/model/StatusCheckResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-registry/src/main/resources/spring-boot-ms-tutorials.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/shah/userservice/model/StatusCheckResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/department-service/src/main/java/com/shah/departmentservice/controller/DepartmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/department-service/src/main/java/com/shah/departmentservice/controller/DepartmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/department-service/src/main/java/com/shah/departmentservice/service/DepartmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/department-service/src/main/java/com/shah/departmentservice/service/DepartmentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/department-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/department-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/department-service/src/main/java/com/shah/departmentservice/model/StatusCheckResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/department-service/src/main/java/com/shah/departmentservice/model/StatusCheckResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/shah/userservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/shah/userservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/shah/userservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/shah/userservice/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +73,9 @@
       <recent name="C:\Users\NORUL\IdeaProjects\spring-microservices-tutorials\cloud-gateway\src\main\resources" />
       <recent name="C:\Users\NORUL\IdeaProjects\spring-microservices-tutorials\cloud-config-service\src\main\resources" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.shah.userservice.model" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
@@ -82,13 +84,13 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CloudConfigService">
-    <configuration name="CloudConfigService" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.shah.cloudconfigservice.CloudConfigServiceApplication" />
-      <module name="cloud-config-service" />
+  <component name="RunManager" selected="Application.DepartmentService (1)">
+    <configuration name="DepartmentService (1)" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.shah.departmentservice.DepartmentServiceApplication" />
+      <module name="department-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.shah.cloudconfigservice.*" />
+          <option name="PATTERN" value="com.shah.departmentservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -96,12 +98,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CloudGateway" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.shah.cloudgateway.CloudGatewayApplication" />
-      <module name="cloud-gateway" />
+    <configuration name="DepartmentService (2)" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.shah.departmentservice.DepartmentServiceApplication" />
+      <module name="department-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.shah.cloudgateway.*" />
+          <option name="PATTERN" value="com.shah.departmentservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -109,12 +111,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="HystrixDashboard" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.shah.hystrixdashboard.HystrixDashboardApplication" />
-      <module name="hystrix-dashboard" />
+    <configuration name="DepartmentService (3)" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.shah.departmentservice.DepartmentServiceApplication" />
+      <module name="department-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.shah.hystrixdashboard.*" />
+          <option name="PATTERN" value="com.shah.departmentservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -122,7 +124,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserService" type="Application" factoryName="Application" temporary="true">
+    <configuration name="UserService (2)" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.shah.userservice.UserServiceApplication" />
       <module name="users-service" />
       <extension name="coverage">
@@ -135,7 +137,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserService2" type="Application" factoryName="Application" temporary="true">
+    <configuration name="UserService (3)" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.shah.userservice.UserServiceApplication" />
       <module name="users-service" />
       <extension name="coverage">
@@ -149,19 +151,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.CloudConfigService" />
-      <item itemvalue="Application.CloudGateway" />
-      <item itemvalue="Application.HystrixDashboard" />
-      <item itemvalue="Application.UserService" />
-      <item itemvalue="Application.UserService2" />
+      <item itemvalue="Application.DepartmentService (3)" />
+      <item itemvalue="Application.DepartmentService (1)" />
+      <item itemvalue="Application.DepartmentService (2)" />
+      <item itemvalue="Application.UserService (2)" />
+      <item itemvalue="Application.UserService (3)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CloudConfigService" />
-        <item itemvalue="Application.UserService2" />
-        <item itemvalue="Application.UserService" />
-        <item itemvalue="Application.HystrixDashboard" />
-        <item itemvalue="Application.CloudGateway" />
+        <item itemvalue="Application.UserService (2)" />
+        <item itemvalue="Application.UserService (3)" />
+        <item itemvalue="Application.DepartmentService (2)" />
+        <item itemvalue="Application.DepartmentService (1)" />
+        <item itemvalue="Application.DepartmentService (3)" />
       </list>
     </recent_temporary>
   </component>

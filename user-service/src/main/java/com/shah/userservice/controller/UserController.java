@@ -2,6 +2,7 @@ package com.shah.userservice.controller;
 
 import com.shah.userservice.VO.ResponseTemplateVO;
 import com.shah.userservice.entity.Users;
+import com.shah.userservice.model.StatusCheckResponse;
 import com.shah.userservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,9 @@ public class UserController {
         return userService.getUserWithDepartment(userId);
     }
 
-    @GetMapping("/status/check")
-    public String status() {
-
-        log.info("instance id: {}", env.getProperty("eureka.instance.instance-id"));
-        return "Working from " + env.getProperty("spring.application.name") + " on port: " + env.getProperty("local.server.port") + " and instance id: "
-                + env.getProperty("eureka.instance.instance-id");
+    @GetMapping("/status-check")
+    public StatusCheckResponse statusCheck() {
+        return userService.statusCheck();
     }
 
 }
