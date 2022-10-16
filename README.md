@@ -155,6 +155,8 @@ Spring Boot likes you to externalize your configuration, so you can work with th
 Externalised properties is usually being fetched through bootstrap property file as this will run before Spring context loads application property file. 
 There are few ways for externalization:
 
+![Image](./service-registry/src/main/resources/externalized-configuration-diagram.drawio.png)
+
 Firstly have a bootstrap file in services that is externalized. in that file,  point to the uri of the config-server:
 
       spring.cloud.config.enabled=true
@@ -169,8 +171,16 @@ Firstly have a bootstrap file in services that is externalized. in that file,  p
 
 Make sure to run config-service first before running your other services as other services will fetch the externalized properties from your config-service on start. 
 
-`17 levels of loading configuration properties` [Reference #1](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config) [Reference #2](https://piotrminkowski.com/2019/03/11/a-magic-around-spring-boot-externalized-configuration/)
+`17 levels of loading configuration properties`  [More information](https://piotrminkowski.com/2019/03/11/a-magic-around-spring-boot-externalized-configuration/)
 
-It is possible to have multiple property sources in a Spring Boot application. Therefore it is important to be aware of the property source that will take precedence over others.
+It is possible to have multiple property sources in a Spring Boot application. Therefore, it is important to be aware of the property source that will take precedence over others. You can view the precedence [here](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config). 
+
+## [Profiles for multiple environments](https://www.baeldung.com/spring-profiles)
+
+Spring Profiles provide a way to segregate parts of your application configuration and make it only available in certain environments. It automatically loads the properties in a application file for all profiles and the ones in profile-specific property files only for the specified profile. The properties in the profile-specific configuration override the ones in the master configuration.
+Here is a sample diagram:
+
+![Image](./service-registry/src/main/resources/externalized-configuration-diagram-2.drawio.png)
+
 
 
