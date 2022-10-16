@@ -190,14 +190,14 @@ Endpoint to test:
 `Sample`
 We have unique app-description values in:
 
-   application.yml in git repo  
-   department.yml in git repo  
-   application.yml in source code in department-service  
-   application.yml in source code in user-service  
+1. department.yml in git repo  
+2. application.yml in git repo  
+3. application.yml in source code in department-service  
+4. application.yml in source code in user-service  
 
 according to level of priority, the status check:
-for dept-service will show from department.yml in git repo  
-for user-service will show from application.yml in git repo  
+- for dept-service will show from department.yml in git repo  
+- for user-service will show from application.yml in git repo  
 
 ![Image](./service-registry/src/main/resources/status-check-dept-service.PNG)
 ![Image](./service-registry/src/main/resources/status-check-user-service.PNG)
