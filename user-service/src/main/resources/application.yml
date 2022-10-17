@@ -21,5 +21,13 @@ spring:
     url: jdbc:mysql://localhost:3306/mydb?useLegacyDatetimeCode=false&serverTimezone=UTC
     username: admin
     password: root
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+
 app:
   description: this is being loaded in user-service source code in application.yml

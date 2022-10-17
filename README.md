@@ -14,7 +14,11 @@
 
 - Start your docker DB
 
-```docker run --detach --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=mydb --env MYSQL_PASSWORD=root --env MYSQL_USER=admin --name localhost --publish 3306:3306 mysql:8.0```
+      docker run --detach --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=mydb --env MYSQL_PASSWORD=root --env MYSQL_USER=admin --name localhost --publish 3306:3306 mysql:8.0
+
+- Run zipkin using Docker
+
+      docker run -d -p 9411:9411 openzipkin/zipkin
 
 - Start service-discovery
 - Start config-service
@@ -115,7 +119,8 @@ value. Now try to run another instance again using Spring and you can see multip
 
 `Warning`
 
-Make sure to have dedicated port for your DB with each service calling a unique DB port else each instance will call their own DB based on the assigned dynamic port.
+Make sure to have dedicated port for your DB with each service calling a unique DB port else each instance will call
+their own DB based on the assigned dynamic port.
 
 ## Load Balancing
 
@@ -150,34 +155,47 @@ Re-run all the requests from user-service and dept-service and view the dashboar
 
 ## [Externalized configuration](https://springframework.guru/spring-external-configuration-data/)
 
-Spring Boot likes you to externalize your configuration, so you can work with the same application code in different environments. You can use properties files, YAML files, environment variables and command-line arguments to externalize configuration. Property values can be injected directly into your beans using the @Value annotation, accessed via Spring’s Environment abstraction or bound to structured objects. 
+Spring Boot likes you to externalize your configuration, so you can work with the same application code in different
+environments. You can use properties files, YAML files, environment variables and command-line arguments to externalize
+configuration. Property values can be injected directly into your beans using the @Value annotation, accessed via
+Spring’s Environment abstraction or bound to structured objects.
 
-Externalised properties is usually being fetched through bootstrap property file as this will run before Spring context loads application property file. 
+Externalised properties is usually being fetched through bootstrap property file as this will run before Spring context
+loads application property file.
 There are few ways for externalization:
 
 ![Image](./service-registry/src/main/resources/externalized-configuration-diagram.drawio.png)
 
-Firstly have a bootstrap file in services that is externalized. in that file,  point to the uri of the config-server:
+Firstly have a bootstrap file in services that is externalized. in that file, point to the uri of the config-server:
 
       spring.cloud.config.enabled=true
       spring.cloud.config.uri=http://localhost:9296
 
 `Configuration for all services`
+
 1. By using application.yml in git repo
 
 `Configuration for individual service`
+
 1. By using {service-name}.yml in git repo
 2. Having `spring.cloud.config.name={service-name}` in application.properties of {service-name} in source code
 
-Make sure to run config-service first before running your other services as other services will fetch the externalized properties from your config-service on start. 
+Make sure to run config-service first before running your other services as other services will fetch the externalized
+properties from your config-service on start.
 
 `17 levels of loading configuration properties`  [More information](https://piotrminkowski.com/2019/03/11/a-magic-around-spring-boot-externalized-configuration/)
 
-It is possible to have multiple property sources in a Spring Boot application. Therefore, it is important to be aware of the property source that will take precedence over others. You can view the precedence [here](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config). 
+It is possible to have multiple property sources in a Spring Boot application. Therefore, it is important to be aware of
+the property source that will take precedence over others. You can view the
+precedence [here](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config)
+.
 
 #### [Profiles for multiple environments](https://www.baeldung.com/spring-profiles)
 
-Spring Profiles provide a way to segregate parts of your application configuration and make it only available in certain environments. It automatically loads the properties in a application file for all profiles and the ones in profile-specific property files only for the specified profile. The properties in the profile-specific configuration override the ones in the master configuration.
+Spring Profiles provide a way to segregate parts of your application configuration and make it only available in certain
+environments. It automatically loads the properties in a application file for all profiles and the ones in
+profile-specific property files only for the specified profile. The properties in the profile-specific configuration
+override the ones in the master configuration.
 Here is a sample diagram:
 
 ![Image](./service-registry/src/main/resources/externalized-configuration-diagram-2.drawio.png)
@@ -190,17 +208,79 @@ Endpoint to test:
 `Sample`
 We have unique app-description values in:
 
-1. department.yml in git repo  
-2. application.yml in git repo  
-3. application.yml in source code in department-service  
-4. application.yml in source code in user-service  
+1. department.yml in git repo
+2. application.yml in git repo
+3. application.yml in source code in department-service
+4. application.yml in source code in user-service
 
 According to level of priority, the status check:
-- for dept-service will show from department.yml in git repo  
-- for user-service will show from application.yml in git repo  
+
+- for dept-service will show from department.yml in git repo
+- for user-service will show from application.yml in git repo
 
 ![Image](./service-registry/src/main/resources/status-check-dept-service.PNG)
 ![Image](./service-registry/src/main/resources/status-check-user-service.PNG)
 
+## [Version 8 - Logging and Tracing using Sleuth & Zipkin](https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin)
+
+`Sleuth` is used to generate and attach the trace id, span id to the logs so that these can then be used by tools like Zipkin and ELK for storage and analysis. `Zipkin` is a distributed tracing system. It helps gather timing data needed to troubleshoot latency problems in service architectures.
+
+Use case: We will implement this in user-service & dept service only for now.
+
+`Step 1`
+
+Run zipkin using Docker
+
+      docker run -d -p 9411:9411 openzipkin/zipkin
+
+`Step 2`
+
+<details>
+<summary>Add dependencies to both services</summary><br>
+
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-sleuth</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-zipkin</artifactId>
+        <version>2.2.8.RELEASE</version>
+      </dependency>
+
+</details>
+
+`Step 3`
+
+<details>
+<summary>add in property file</summary><br>
+
+    spring
+        zipkin:
+            base-url: http://localhost:9411
+            sender:
+                type: web
+        sleuth:
+            sampler:
+            probability: 1
+
+</details>
+
+Once above done,  
+- Start all services
+- run all url in postman
+- Open zip using browser - http://localhost:9411/zipkin/
+- Add service name: user/dept service
+
+`Added logs`
+
+Just do any request and check the logs. This looks like a normal log, except for the part in the beginning between the brackets. This is the core information that Spring Sleuth has added. This data follows the format of:
+
+    [application name, traceId, spanId, export]
+
+    Application name – This is the name we set in the properties file and can be used to aggregate logs from multiple instances of the same application.  
+    TraceId – This is an id that is assigned to a single request, job, or action. Something like each unique user initiated web request will have its own traceId.  
+    SpanId – Tracks a unit of work. Think of a request that consists of multiple steps. Each step could have its own spanId and be tracked individually. By default, any application flow will start with same TraceId and SpanId.  
+    Export – This property is a boolean that indicates whether or not this log was exported to an aggregator like Zipkin. Zipkin is beyond the scope of this article but plays an important role in analyzing logs created by Sleuth.  
 
 
