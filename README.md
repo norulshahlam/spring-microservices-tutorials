@@ -24,6 +24,8 @@
 - Start config-service
 - start other services: dept, user, hystrix, apigateway
 
+![Image](./service-registry/src/main/resources/registered-services.PNG)
+
 <details>
 <summary>Debugging your DB server</summary><br>
 
