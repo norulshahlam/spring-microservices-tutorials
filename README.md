@@ -26,6 +26,12 @@
 
 ![Image](./service-registry/src/main/resources/registered-services.PNG)
 
+Eureka console: `http://localhost:8761/`  
+Hystrix dashboard: `http://localhost:9295/`  
+Zipkin  dashboard: `http://localhost:9411/`  
+Postman collections: [Click here](../spring-microservices-tutorials/service-registry/src/main/resources/spring-boot-ms-tutorials.postman_collection.json)
+
+
 <details>
 <summary>Debugging your DB server</summary><br>
 
